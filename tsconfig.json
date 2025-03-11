@@ -1,0 +1,56 @@
+{
+  "compilerOptions": {
+    /* Language and Environment */
+    "target": "ES2020",                                /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "module": "ESNext",                                /* Specify what module code is generated. */
+    "moduleResolution": "node",                        /* Use Node's resolution strategy to resolve modules. */
+    "skipLibCheck": true,                              /* Skip type checking of declaration files. */
+
+    /* JavaScript Support */
+    "allowJs": true,                                  /* Allow JavaScript files to be a part of your program. */
+    "checkJs": true,                                  /* Enable error reporting in type-checked JavaScript files. */
+
+    /* Interop Constraints */
+    "esModuleInterop": true,                          /* Emit additional JavaScript to ease support for importing CommonJS modules. */
+    "allowSyntheticDefaultImports": true,              /* Allow default imports from modules with no default export. */
+    "forceConsistentCasingInFileNames": true,          /* Ensure that casing is correct in imports. */
+
+    /* Type Checking */
+    "strict": true,                                    /* Enable all strict type checking options. */
+    "noUnusedLocals": true,                            /* Report errors on unused locals. */
+    "noUnusedParameters": true,                        /* Report errors on unused function parameters. */
+    "noFallthroughCasesInSwitch": true,                /* Prevent fall-through between case statements in switch. */
+    "exactOptionalPropertyTypes": true,                /* Interpret optional property types as written, instead of adding 'undefined'. */
+    "noImplicitReturns": true,                         /* Ensure all functions explicitly return a value. */
+    "noImplicitOverride": true,                        /* Ensure that overriding methods in derived classes are explicitly marked with 'override'. */
+    "useUnknownInCatchVariables": true,                /* Ensure 'unknown' is used for catch clause variables. */
+
+    /* Module Settings */
+    "baseUrl": ".",                                   /* Base directory for resolving non-relative module names. */
+    "paths": {
+      "@models/*": ["server/src/models/*"],            /* Path alias for server models directory. */
+      "@controllers/*": ["server/src/controllers/*"],  /* Path alias for server controllers directory. */
+      "@services/*": ["server/src/services/*"],        /* Path alias for server services directory. */
+      "@utils/*": ["server/src/utils/*"],              /* Path alias for server utilities directory. */
+      "@client/*": ["client/src/*"]                     /* Path alias for client source directory. */
+    },
+
+    /* Output Settings */
+    "outDir": "./dist",                               /* Output directory for the compiled files. */
+    "rootDir": "./src",                               /* Root directory of your source files. */
+
+    /* Source Map */
+    "sourceMap": true,                                /* Enable source maps for easier debugging. */
+
+    /* Performance */
+    "skipDefaultLibCheck": true                        /* Skip type checking of default library declaration files for faster compilation. */
+  },
+  "include": [
+    "server/src/**/*.ts",                              /* Include all TypeScript files inside the 'server/src' directory. */
+    "client/src/**/*.ts"                               /* Include all TypeScript files inside the 'client/src' directory. */
+  ],
+  "exclude": [
+    "node_modules",                                   /* Exclude the 'node_modules' directory. */
+    "dist"                                            /* Exclude the 'dist' directory where compiled files go. */
+  ]
+}
