@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import { User } from '../models/index.js'; // Ensure this path is correct
+import { User } from '../models/index.js'; // 
 
 // Create a new router instance
 const router = Router();
@@ -21,7 +21,7 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ message: 'User not found' });
     }
 
-    // **No bcrypt comparison needed, directly comparing password**
+    // Setting Up Password
     if (password !== user.password) {
       // If passwords don't match, send response
       return res.status(401).json({ message: 'Invalid password' });
@@ -40,32 +40,7 @@ export const login = async (req: Request, res: Response) => {
   }
 };
 
-// signUp function to register a new user
-export const signUp = async (req: Request, res: Response) => {
-  try {
-    // Extract username and password from request body
-    const { username, password } = req.body;
-
-    // **No bcrypt hashing needed, storing password in plain text**
-    const newUser = await User.create({ username, password, createdAt: new Date(), updatedAt: new Date() });
-
-    // Get secret key from .env
-    const secretKey = process.env.JWT_SECRET_KEY || '';
-    // Generate JWT token for the authenticated user
-    const token = jwt.sign({ username: newUser.username }, secretKey, { expiresIn: '1d' });
-
-    // Return the token and the newly created user's ID
-    res.json({ token, userID: newUser.id });
-  } catch (error: any) {
-    console.error("Error during signup:", error);
-    res.status(400).json({ message: 'User could not be created' });
-  }
-};
-
 // POST /login - Login a user
 router.post('/login', login);
-
-// POST /signup - Register a new user
-router.post('/signup', signUp);
 
 export default router; // Export the router instance
