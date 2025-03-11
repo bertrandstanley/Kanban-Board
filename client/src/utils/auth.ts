@@ -5,7 +5,7 @@ class AuthService {
     const payload = JSON.parse(idToken);
     localStorage.setItem('id_token', payload.token);
     localStorage.setItem('user_id', payload.userID);
-    window.location.assign('/Movies');
+    window.location.assign('/');
   }
 
   getUserID(): string {
