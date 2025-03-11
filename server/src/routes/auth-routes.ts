@@ -1,7 +1,6 @@
 import { Router, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
-import { User } from '../models/index.js';
+import { User } from '../models/index.js'; // Ensure this path is correct
 
 // Create a new router instance
 const router = Router();
@@ -22,10 +21,9 @@ export const login = async (req: Request, res: Response) => {
       return res.status(401).json({ message: 'User not found' });
     }
 
-    // Compare provided password with the stored hashed password
-    const passwordIsValid = await bcrypt.compare(password, user.password);
-    if (!passwordIsValid) {
-      // If invalid, send response
+    // **No bcrypt comparison needed, directly comparing password**
+    if (password !== user.password) {
+      // If passwords don't match, send response
       return res.status(401).json({ message: 'Invalid password' });
     }
 
@@ -45,14 +43,11 @@ export const login = async (req: Request, res: Response) => {
 // signUp function to register a new user
 export const signUp = async (req: Request, res: Response) => {
   try {
-    // Extract username, email and password from request body
+    // Extract username and password from request body
     const { username, password } = req.body;
 
-    // Hash the password before storing it
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    // Create user in the database with provided details
-    const newUser = await User.create({ username, password: hashedPassword, createdAt: new Date(), updatedAt: new Date() });
+    // **No bcrypt hashing needed, storing password in plain text**
+    const newUser = await User.create({ username, password, createdAt: new Date(), updatedAt: new Date() });
 
     // Get secret key from .env
     const secretKey = process.env.JWT_SECRET_KEY || '';
@@ -69,5 +64,8 @@ export const signUp = async (req: Request, res: Response) => {
 
 // POST /login - Login a user
 router.post('/login', login);
+
+// POST /signup - Register a new user
+router.post('/signup', signUp);
 
 export default router; // Export the router instance

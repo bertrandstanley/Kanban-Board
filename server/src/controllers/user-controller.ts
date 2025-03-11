@@ -1,22 +1,19 @@
 import { Request, Response } from 'express';
-import { User } from '../models/user.js';
-import bcrypt from 'bcrypt';
+import { User } from '../models/user.js'; // Import the User model
 
 export const login = async (req: Request, res: Response) => {
     try {
         const { username, password } = req.body;
 
-        // Step 1: Find the user in the database by their username (or email)
+        // Step 1: Find the user in the database by their username
         const user = await User.findOne({ where: { username } });
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Step 2: Compare the password entered by the user with the hashed password in the database
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (!isMatch) {
+        // Step 2: Check if the password entered by the user matches the stored plain text password
+        if (password !== user.password) {
             return res.status(401).json({ message: 'Invalid password' });
         }
 
@@ -69,7 +66,12 @@ export const getUserById = async (req: Request, res: Response) => {
 export const createUser = async (req: Request, res: Response) => {
   const { username, password } = req.body;
   try {
-    const newUser = await User.create({ username, password, createdAt: new Date(), updatedAt: new Date() });
+    const newUser = await User.create({
+      username,
+      password, // Store plain text password directly
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
     res.status(201).json(newUser);
   } catch (error: any) {
     res.status(400).json({ message: error.message });
@@ -84,7 +86,7 @@ export const updateUser = async (req: Request, res: Response) => {
     const user = await User.findByPk(id);
     if (user) {
       user.username = username;
-      user.password = password;
+      user.password = password; // Set the new plain text password
       await user.save();
       res.json(user);
     } else {

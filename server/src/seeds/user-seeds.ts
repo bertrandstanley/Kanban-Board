@@ -1,9 +1,19 @@
-import { User } from '../models/user.js';
+// seed.ts (or your seeding logic)
 
-export const seedUsers = async () => {
-  await User.bulkCreate([
-    { username: 'JollyGuru', password: 'password', createdAt: new Date(), updatedAt: new Date() },
-    { username: 'SunnyScribe', password: 'password', createdAt: new Date(), updatedAt: new Date() },
-    { username: 'RadiantComet', password: 'password', createdAt: new Date(), updatedAt: new Date() },
-  ], { individualHooks: true });
+import { User } from '../models/user';
+
+const seedUser = async () => {
+  try {
+    const user = await User.create({
+      username: 'RadiantComet',
+      password: 'password', // Plain text password
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    console.log('User seeded:', user);
+  } catch (err) {
+    console.error('Error seeding user:', err);
+  }
 };
+
+seedUser();

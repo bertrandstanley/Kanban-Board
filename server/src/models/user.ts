@@ -1,5 +1,6 @@
+// server/models/user.ts
+
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
-import bcrypt from 'bcrypt';
 
 interface UserAttributes {
   id: number;
@@ -14,20 +15,11 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
   public username!: string;
-  public password!: string;
+  public password!: string; // Plain text password
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
-  // Method to set (hash) the password
-  public async setPassword(password: string) {
-    const saltRounds = 10; // Defines the complexity of the hash
-    this.password = await bcrypt.hash(password, saltRounds);
-  }
-
-  // Method to check if password matches the hashed password
-  public async validatePassword(password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password);
-  }
+  // No need for bcrypt logic, password is stored as plain text.
 }
 
 export function UserFactory(sequelize: Sequelize): typeof User {
@@ -45,7 +37,7 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       },
       password: {
         type: DataTypes.STRING,
-        allowNull: false,
+        allowNull: false, // Store the plain text password
       },
       createdAt: {
         type: DataTypes.DATE,
@@ -61,14 +53,14 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       sequelize,
       timestamps: true, // Enable timestamps
       hooks: {
-        // Before creating a user, hash the password
-        beforeCreate: async (user: User) => {
-          await user.setPassword(user.password);
+        // Before creating a user, no hashing required
+        beforeCreate: async () => {
+          // You can add any additional logic before user creation if needed
         },
-        // Before updating the user, hash the new password (if changed)
+        // Before updating the user, no hashing required
         beforeUpdate: async (user: User) => {
           if (user.changed('password')) {
-            await user.setPassword(user.password);
+            // You can add any additional logic here if needed
           }
         },
       },
