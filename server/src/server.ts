@@ -1,10 +1,19 @@
 import dotenv from 'dotenv';
-dotenv.config();
 import express from 'express';
 import path from 'node:path';
-const root = process.cwd();
-import sequelize from './config/connection.js';
 import routes from './routes/index.js';
+import sequelize from './config/connection.js';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const root = process.cwd();
+
+// Get the current directory using import.meta.url
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
+// Load environment variables from .env file
+dotenv.config({ path: path.resolve(__dirname, '../../.env') });
 
 const app = express();
 const PORT = process.env.PORT || 3001;
