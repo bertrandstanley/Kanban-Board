@@ -1,47 +1,53 @@
-// seed.ts (or your seeding logic)
-
-import { User } from '../models/user';
+import sequelize from '../config/connection.js';
+import { UserFactory } from '../models/user.js';
 
 const seedUsers = async () => {
   try {
-    // Create the first user
+    const User = UserFactory(sequelize);
+
+    // Sync the database, creating the table if it doesn’t exist
+    // Keep `force: false` don't reset the tables
+    await sequelize.sync({ force: false }); // 
+    console.log('Database synced, users table created');
+
+    // Seed users with plain text passwords (as requested)
     const user1 = await User.create({
       username: 'JollyGuru',
-      password: 'password', // Plain text password
+      password: 'password',  // Plaintext password
       createdAt: new Date(),
       updatedAt: new Date(),
     });
-    console.log('User seeded:', user1);
+    console.log('User seeded:', user1.username);
 
-    // Create the second user
     const user2 = await User.create({
       username: 'SunnyScribe',
-      password: 'password', // Plain text password
+      password: 'password',  // Plaintext password
       createdAt: new Date(),
       updatedAt: new Date(),
     });
-    console.log('User seeded:', user2);
+    console.log('User seeded:', user2.username);
 
-    // Create the third user
     const user3 = await User.create({
       username: 'RadiantComet',
-      password: 'password', // Plain text password
+      password: 'password',  // Plaintext password
       createdAt: new Date(),
       updatedAt: new Date(),
     });
-    console.log('User seeded:', user3);
+    console.log('User seeded:', user3.username);
 
-    // Create the fourth user
     const user4 = await User.create({
       username: 'StanleyBertrand',
-      password: 'password', // Plain text password
+      password: 'password',  // Plaintext password
       createdAt: new Date(),
       updatedAt: new Date(),
     });
-    console.log('User seeded:', user4);
+    console.log('User seeded:', user4.username);
 
+    console.log('Seeding completed successfully!');
   } catch (err) {
-    console.error('Error seeding user:', err);
+    console.error('Error seeding users:', err);
+  } finally {
+    await sequelize.close(); // Close the connection
   }
 };
 
