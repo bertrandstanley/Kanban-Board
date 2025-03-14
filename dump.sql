@@ -31,7 +31,9 @@ CREATE TABLE public.tickets (
     description character varying(255) NOT NULL,
     "assignedUserId" integer,
     "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT tickets_pkey PRIMARY KEY (id),
+    CONSTRAINT tickets_assignedUserId_fkey FOREIGN KEY ("assignedUserId") REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE SET NULL
 );
 
 ALTER TABLE public.tickets OWNER TO postgres;
@@ -49,11 +51,6 @@ CREATE SEQUENCE public.tickets_id_seq
     CACHE 1;
 
 ALTER SEQUENCE public.tickets_id_seq OWNER TO postgres;
-
---
--- Name: tickets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
 ALTER SEQUENCE public.tickets_id_seq OWNED BY public.tickets.id;
 
 --
@@ -65,7 +62,9 @@ CREATE TABLE public.users (
     username character varying(255) NOT NULL,
     password character varying(255) NOT NULL,
     "createdAt" timestamp with time zone NOT NULL,
-    "updatedAt" timestamp with time zone NOT NULL
+    "updatedAt" timestamp with time zone NOT NULL,
+    CONSTRAINT users_pkey PRIMARY KEY (id),
+    CONSTRAINT users_username_key UNIQUE (username)
 );
 
 ALTER TABLE public.users OWNER TO postgres;
@@ -83,24 +82,7 @@ CREATE SEQUENCE public.users_id_seq
     CACHE 1;
 
 ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
-
---
--- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
 ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
-
---
--- Name: tickets id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tickets ALTER COLUMN id SET DEFAULT nextval('public.tickets_id_seq'::regclass);
-
---
--- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 --
 -- Data for Name: tickets; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -122,7 +104,7 @@ COPY public.tickets (id, name, status, description, "assignedUserId", "createdAt
 COPY public.users (id, username, password, "createdAt", "updatedAt") FROM stdin;
 1	JollyGuru	password	2025-03-07 05:45:32.675-05	2025-03-07 05:45:32.675-05
 2	SunnyScribe	password	2025-03-07 05:45:32.675-05	2025-03-07 05:45:32.675-05
-3	RadiantComet	password	2025-03-07 05:45:32.675-05	2025-03-03 05:45:32.675-05
+3	RadiantComet	password	2025-03-07 05:45:32.675-05	2025-03-07 05:45:32.675-05
 4	StanleyBertrand	password	2025-03-07 05:45:32.675-05	2025-03-07 05:45:32.675-05
 \.
 
@@ -139,38 +121,8 @@ SELECT pg_catalog.setval('public.tickets_id_seq', 14, true);
 SELECT pg_catalog.setval('public.users_id_seq', 4, true);
 
 --
--- Name: tickets tickets_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tickets
-    ADD CONSTRAINT tickets_pkey PRIMARY KEY (id);
-
---
--- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
---
--- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.users
-    ADD CONSTRAINT users_username_key UNIQUE (username);
-
---
--- Name: tickets tickets_assignedUserId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.tickets
-    ADD CONSTRAINT "tickets_assignedUserId_fkey" FOREIGN KEY ("assignedUserId") REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE SET NULL;
-
---
 -- PostgreSQL database dump complete
 --
 
 DROP TABLE IF EXISTS public.tickets CASCADE;
-CREATE TABLE public.tickets (...);
 DROP TABLE IF EXISTS public.users CASCADE;
-CREATE TABLE public.users (...);
