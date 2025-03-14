@@ -6,7 +6,7 @@ const seedUsers = async () => {
     const User = UserFactory(sequelize);
 
     // Sync the database, creating the table if it doesn’t exist
-    await sequelize.sync({ force: false }); // Make sure the table is created if it doesn't exist
+    await sequelize.sync({ force: false });  // Make sure the table is created if it doesn't exist
     console.log('Database synced, users table created (if not already existing)');
 
     // Seed users with plain text passwords (as requested)
@@ -46,8 +46,9 @@ const seedUsers = async () => {
   } catch (err) {
     console.error('Error seeding users:', err);
   } finally {
-    await sequelize.close(); // Close the connection when done
+    await sequelize.close();  // Close the connection when done
   }
 };
 
+// Execute the seeding function
 seedUsers();
