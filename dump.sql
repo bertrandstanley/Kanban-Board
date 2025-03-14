@@ -8,7 +8,6 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
-SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -35,7 +34,6 @@ CREATE TABLE public.tickets (
     "updatedAt" timestamp with time zone NOT NULL
 );
 
-
 ALTER TABLE public.tickets OWNER TO postgres;
 
 --
@@ -50,7 +48,6 @@ CREATE SEQUENCE public.tickets_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
 ALTER SEQUENCE public.tickets_id_seq OWNER TO postgres;
 
 --
@@ -58,7 +55,6 @@ ALTER SEQUENCE public.tickets_id_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE public.tickets_id_seq OWNED BY public.tickets.id;
-
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
@@ -71,7 +67,6 @@ CREATE TABLE public.users (
     "createdAt" timestamp with time zone NOT NULL,
     "updatedAt" timestamp with time zone NOT NULL
 );
-
 
 ALTER TABLE public.users OWNER TO postgres;
 
@@ -87,7 +82,6 @@ CREATE SEQUENCE public.users_id_seq
     NO MAXVALUE
     CACHE 1;
 
-
 ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
 
 --
@@ -96,20 +90,17 @@ ALTER SEQUENCE public.users_id_seq OWNER TO postgres;
 
 ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
-
 --
 -- Name: tickets id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tickets ALTER COLUMN id SET DEFAULT nextval('public.tickets_id_seq'::regclass);
 
-
 --
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
-
 
 --
 -- Data for Name: tickets; Type: TABLE DATA; Schema: public; Owner: postgres
@@ -124,7 +115,6 @@ COPY public.tickets (id, name, status, description, "assignedUserId", "createdAt
 11	I'm done with this challenge	Done	It was hard.	4	2025-03-11 05:25:35.386-04	2025-03-11 05:25:35.388-04
 \.
 
-
 --
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -132,10 +122,9 @@ COPY public.tickets (id, name, status, description, "assignedUserId", "createdAt
 COPY public.users (id, username, password, "createdAt", "updatedAt") FROM stdin;
 1	JollyGuru	password	2025-03-07 05:45:32.675-05	2025-03-07 05:45:32.675-05
 2	SunnyScribe	password	2025-03-07 05:45:32.675-05	2025-03-07 05:45:32.675-05
-3	RadiantComet	password	2025-03-07 05:45:32.675-05	2025-03-07 05:45:32.675-05
+3	RadiantComet	password	2025-03-07 05:45:32.675-05	2025-03-03 05:45:32.675-05
 4	StanleyBertrand	password	2025-03-07 05:45:32.675-05	2025-03-07 05:45:32.675-05
 \.
-
 
 --
 -- Name: tickets_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
@@ -143,13 +132,11 @@ COPY public.users (id, username, password, "createdAt", "updatedAt") FROM stdin;
 
 SELECT pg_catalog.setval('public.tickets_id_seq', 14, true);
 
-
 --
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
 SELECT pg_catalog.setval('public.users_id_seq', 4, true);
-
 
 --
 -- Name: tickets tickets_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
@@ -158,14 +145,12 @@ SELECT pg_catalog.setval('public.users_id_seq', 4, true);
 ALTER TABLE ONLY public.tickets
     ADD CONSTRAINT tickets_pkey PRIMARY KEY (id);
 
-
 --
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
-
 
 --
 -- Name: users users_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
@@ -174,14 +159,12 @@ ALTER TABLE ONLY public.users
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_username_key UNIQUE (username);
 
-
 --
 -- Name: tickets tickets_assignedUserId_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.tickets
     ADD CONSTRAINT "tickets_assignedUserId_fkey" FOREIGN KEY ("assignedUserId") REFERENCES public.users(id) ON UPDATE CASCADE ON DELETE SET NULL;
-
 
 --
 -- PostgreSQL database dump complete
