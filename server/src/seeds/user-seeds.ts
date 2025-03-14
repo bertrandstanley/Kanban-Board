@@ -9,10 +9,10 @@ const seedUsers = async () => {
     await sequelize.sync({ force: false });  // Make sure the table is created if it doesn't exist
     console.log('Database synced, users table created (if not already existing)');
 
-    // Seed users with plain text passwords (as requested)
+    // Seed users with plain text passwords 
     const user1 = await User.create({
       username: 'JollyGuru',
-      password: 'password',  // Plaintext password
+      password: 'password',  
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -20,7 +20,7 @@ const seedUsers = async () => {
 
     const user2 = await User.create({
       username: 'SunnyScribe',
-      password: 'password',  // Plaintext password
+      password: 'password',  
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -28,7 +28,7 @@ const seedUsers = async () => {
 
     const user3 = await User.create({
       username: 'RadiantComet',
-      password: 'password',  // Plaintext password
+      password: 'password',  
       createdAt: new Date(),
       updatedAt: new Date(),
     });
@@ -36,7 +36,7 @@ const seedUsers = async () => {
 
     const user4 = await User.create({
       username: 'StanleyBertrand',
-      password: 'password',  // Plaintext password
+      password: 'password', 
       createdAt: new Date(),
       updatedAt: new Date(),
     });

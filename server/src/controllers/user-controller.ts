@@ -5,22 +5,18 @@ export const login = async (req: Request, res: Response) => {
     try {
         const { username, password } = req.body;
 
-        // Step 1: Find the user in the database by their username
+        // Find the user in the database by their username
         const user = await User.findOne({ where: { username } });
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Step 2: Check if the password entered by the user matches the stored plain text password
+        // Check if the password entered by the user matches the stored plain text password
         if (password !== user.password) {
             return res.status(401).json({ message: 'Invalid password' });
         }
 
-        // Step 3: If login is successful, respond with a success message or JWT token
-        // You can generate a JWT token here if you're using token-based authentication
-        // Example (if you're using JWT):
-        // const token = generateJWT(user);  // You'd need to implement the generateJWT function
 
         return res.status(200).json({
             message: 'Login successful',

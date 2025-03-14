@@ -20,8 +20,6 @@ const sequelize = dbUrl
       dialect: 'postgres',
       dialectOptions: {
         decimalNumbers: true,
-        // Add SSL for production if needed (e.g., Render)
-        // ssl: { require: true, rejectUnauthorized: false },
       },
     })
   : new Sequelize(dbName!, dbUser!, dbPassword, {
