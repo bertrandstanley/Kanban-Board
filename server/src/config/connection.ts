@@ -10,13 +10,19 @@ if (!process.env.DB_URL && (!process.env.DB_NAME || !process.env.DB_USER || !pro
 
 // Create a Sequelize instance based on DB_URL or individual variables from environment
 const sequelize = process.env.DB_URL
-  ? new Sequelize(process.env.DB_URL, { dialect: 'postgres' })  // Use DB_URL directly if provided
+  ? new Sequelize(process.env.DB_URL, { 
+      dialect: 'postgres',
+      dialectOptions: {
+        decimalNumbers: true,  // Ensure decimal numbers are handled properly
+      },
+    })  // Use DB_URL directly if provided
   : new Sequelize(
       process.env.DB_NAME as string,  // Fallback to empty string if DB_NAME is missing
       process.env.DB_USER as string,  // Fallback to empty string if DB_USER is missing
       process.env.DB_PASSWORD as string,  // Ensure DB_PASSWORD is set, fallback to empty string
       {
         host: process.env.DB_HOST || 'localhost',  // Default to 'localhost' if DB_HOST is missing
+        port: process.env.DB_PORT ? parseInt(process.env.DB_PORT, 10) : 5432,  // Default to 5432 if DB_PORT is missing
         dialect: 'postgres',
         dialectOptions: {
           decimalNumbers: true,  // Ensure decimal numbers are handled properly

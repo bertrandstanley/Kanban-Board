@@ -29,8 +29,7 @@ app.use(routes);
 app.get('*', (_req, res) => {
     res.sendFile(path.join(root, '../client/dist/index.html'));
 });
-
-// * Change force to true to drop tables and recreate them
+// Don't re drop the tables if they already exist
 sequelize.sync({force: false}).then(() => {
   app.listen(PORT, () => {
     console.log(`Server is listening on port ${PORT}`);
