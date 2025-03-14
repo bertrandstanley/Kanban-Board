@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cd server && npm start",
-   "deploy": "psql $DB_URL -f seeds.sql && npm start",
+    "deploy": "psql $DB_URL -f server/db/seeds.sql && npm start",
     "start:dev": "concurrently \"npm run server:dev\" \"wait-on tcp:3001 && npm run client:dev\"",
     "server": "cd server && npm start",
     "server:dev": "cd server && npm run dev",

@@ -64,7 +64,7 @@ The following images show the web application's appearance and functionality:
 
 ## Deployed URL
 
-[Click Here](https://youtu.be/doM3SfX5spk) to try the Kanban Board.
+[Click Here](https://kanban-board-uyyf.onrender.com) to try the Kanban Board.
 
 ## License
 
