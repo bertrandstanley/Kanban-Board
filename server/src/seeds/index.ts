@@ -6,9 +6,10 @@ const seedUsers = async () => {
   try {
     // Example users for seeding
     const users = [
-      { username: 'stanley', password: 'password123' },
+      { username: 'StanleyBertrand', password: 'password' },
       { username: 'JollyGuru', password: 'password' },
-      { username: 'admin', password: 'admin123' }
+      { username: 'SunnyScribe', password: 'password' },
+      { username: 'RadiantComet', password: 'admin123' }
     ];
 
     // Create users in the database
@@ -29,8 +30,8 @@ const seedUsers = async () => {
 
 const seedAll = async (): Promise<void> => {
   try {
-    // Sync the database (drop tables if needed and recreate them)
-    await sequelize.sync({ force: true });
+    // Sync the database (Do not force sync to avoid data loss)
+    await sequelize.sync({ force: false });
     console.log('\n----- DATABASE SYNCED -----\n');
     
     // Seed users
