@@ -18,8 +18,6 @@ export class User extends Model<UserAttributes, UserCreationAttributes> implemen
   public password!: string; // Plain text password
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
-
-  // No need for bcrypt logic, password is stored as plain text.
 }
 
 export function UserFactory(sequelize: Sequelize): typeof User {
